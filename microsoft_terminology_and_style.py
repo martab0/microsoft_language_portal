@@ -7,9 +7,11 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+
 
 
 # Reject cookies popup
@@ -55,6 +57,8 @@ def download_content(site_url, language_name):
     xpath_download_button = '//button[text()=" Download"]'
     # Define Language selection button
     xpath_selection_button = '//button[@aria-label="Select a language"]'
+    # Define where to select languages
+    xpath_languages_list = '//ul[@class="c-menu"]'
     # Define language entry on dropdown list
     xpath_language_entry = '//p[text()="Arabic"]'
 
@@ -74,7 +78,10 @@ def download_content(site_url, language_name):
         return (downloaded)
     
     print("Scrolling down to language: "+language_name)
-    language_entry = driver.find_element(By.XPATH, xpath_language_entry)
+
+    # language_entry = driver.find_element(By.XPATH, xpath_language_entry)
+    language_entry = driver.find_element(By.XPATH, "//ul[@class='c-menu']/li[@id='lntermdrpw77']")
+
     try:
         driver.execute_script("arguments[0].scrollIntoView();", language_entry)
     except:
