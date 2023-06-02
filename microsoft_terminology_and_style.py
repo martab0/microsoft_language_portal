@@ -57,12 +57,11 @@ def download_content(site_url, language_name):
 
     # Define Download button
     xpath_download_button = '//button[normalize-space()="Download"]'
+
     # Define Language selection button
     xpath_selection_button = '//button[normalize-space()="Select a language"]'
 
     # Define language entry on dropdown list
-    # temp = "lntermdrpw34"
-    # xpath_language_entry = '//ul[@class="c-menu"]/li[@id="%s"]'% str(temp)
     xpath_language_entry = '//p[text()="%s"]/ancestor::*'% str(language_name)
 
     wait = WebDriverWait(driver, 10)
@@ -135,11 +134,13 @@ def download_content(site_url, language_name):
 
 if __name__ == "__main__":
 
+    # YOUR LIST OF LANGUAGES AS USED ON https://www.microsoft.com/language/Terminology
     languages = ['Arabic','German','Polish']
     
     terminology = 'https://www.microsoft.com/language/Terminology'
     styleguides = 'https://www.microsoft.com/language/StyleGuides'
-    assets = [terminology, styleguides]
+    # StyleGuides do not work yet :-(
+    assets = [terminology]
 
     for asset in assets:
         for language in languages:
