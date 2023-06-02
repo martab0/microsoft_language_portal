@@ -136,8 +136,9 @@ def download_content(site_url, language_name):
 if __name__ == "__main__":
 
     assets = ['terminology', 'style_guide']
-    languages = ['German']
+    languages = ['Arabic','German','Polish']
     terminology_site = 'https://www.microsoft.com/language/Terminology'
+    styleguides_site = 'https://www.microsoft.com/language/StyleGuides'
 
     for language in languages:
         download_content(terminology_site, language)
