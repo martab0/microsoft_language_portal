@@ -55,6 +55,8 @@ def download_content(site_url, language_name):
     xpath_download_button = '//button[text()=" Download"]'
     # Define Language selection button
     xpath_selection_button = '//button[@aria-label="Select a language"]'
+    # Define language entry on dropdown list
+    xpath_language_entry = '//p[text()="Arabic"]'
 
     wait = WebDriverWait(driver, 10)
     time.sleep(10)
@@ -68,8 +70,26 @@ def download_content(site_url, language_name):
     try:
         selection_button.click()
     except Exception as e:
-        print ("Failed to select download language because: "+str(e))
+        print ("Failed to start selecting download language because: "+str(e))
         return (downloaded)
+    
+    print("Scrolling down to language: "+language_name)
+    language_entry = driver.find_element(By.XPATH, xpath_language_entry)
+    try:
+        driver.execute_script("arguments[0].scrollIntoView();", language_entry)
+    except:
+        print ("Failed to scroll to language")
+        return (downloaded)
+    
+    time.sleep(10)
+    
+    print("Clicking language entry: "+language_name)
+    try:
+        language_entry.click()
+    except Exception as e:
+        print ("Failed to press Download button because: "+str(e))
+        return (downloaded)
+
     
     print("Pressing Download button: "+language_name)
     try: 
