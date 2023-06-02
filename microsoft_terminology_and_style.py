@@ -40,8 +40,10 @@ def download_content(site_url, language_name):
 
     print("----------")
     print("Handling: "+language_name)
-
-    download_folder = language_name
+    
+    if not os.path.exists(language_name):
+        os.makedirs(language_name)
+    download_folder = os.path.abspath(language_name)
 
     # Create webdriver in headless mode to download to folder
     webdriver_options = webdriver.ChromeOptions()
@@ -60,7 +62,7 @@ def download_content(site_url, language_name):
     # Define where to select languages
     xpath_languages_list = '//ul[@class="c-menu"]'
     # Define language entry on dropdown list
-    xpath_language_entry = '//p[text()="Arabic"]'
+    xpath_language_entry = '//ul[@class="c-menu"]/li[@id="lntermdrpw77"]'
 
     wait = WebDriverWait(driver, 10)
     time.sleep(10)
@@ -80,7 +82,7 @@ def download_content(site_url, language_name):
     print("Scrolling down to language: "+language_name)
 
     # language_entry = driver.find_element(By.XPATH, xpath_language_entry)
-    language_entry = driver.find_element(By.XPATH, "//ul[@class='c-menu']/li[@id='lntermdrpw77']")
+    language_entry = driver.find_element(By.XPATH, xpath_language_entry)
 
     try:
         driver.execute_script("arguments[0].scrollIntoView();", language_entry)
@@ -110,16 +112,19 @@ def download_content(site_url, language_name):
         print ("Failed to press Download button because: "+str(e))
         return (downloaded)
     
+    time.sleep(10)
+
+
     # Check if download has ended
 
-    fileends = "crdownload"
-    while "crdownload" == fileends:
-        time.sleep(10)
-        newest_file = latest_download_file(download_folder)
-        if "crdownload" in newest_file:
-            fileends = "crdownload"
-        else:
-            fileends = "none"
+    # fileends = "crdownload"
+    # while "crdownload" == fileends:
+    #     time.sleep(10)
+    #     newest_file = latest_download_file(download_folder)
+    #     if "crdownload" in newest_file:
+    #         fileends = "crdownload"
+    #     else:
+    #         fileends = "none"
 
     downloaded=True
     print("Downloaded from page: "+driver.title)
