@@ -39,7 +39,7 @@ def download_content(site_url, language_name):
     downloaded=False
 
     print("----------")
-    print("Handling: "+language_name)
+    print("Handling: "+language_name+" "+site_url)
     
     if not os.path.exists(language_name):
         os.makedirs(language_name)
@@ -135,12 +135,14 @@ def download_content(site_url, language_name):
 
 if __name__ == "__main__":
 
-    assets = ['terminology', 'style_guide']
     languages = ['Arabic','German','Polish']
-    terminology_site = 'https://www.microsoft.com/language/Terminology'
-    styleguides_site = 'https://www.microsoft.com/language/StyleGuides'
+    
+    terminology = 'https://www.microsoft.com/language/Terminology'
+    styleguides = 'https://www.microsoft.com/language/StyleGuides'
+    assets = [terminology, styleguides]
 
-    for language in languages:
-        download_content(terminology_site, language)
+    for asset in assets:
+        for language in languages:
+            download_content(asset, language)
 
 
