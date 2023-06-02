@@ -49,7 +49,7 @@ def download_content(site_url, language_name):
     webdriver_options = webdriver.ChromeOptions()
     prefs = {"download.default_directory": download_folder}
     webdriver_options.add_experimental_option('prefs', prefs)
-    #webdriver_options.add_argument('--headless=new')
+    webdriver_options.add_argument('--headless=new')
     webdriver_options.add_argument('--incognito')
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=webdriver_options)
 
@@ -58,12 +58,12 @@ def download_content(site_url, language_name):
     # Define Download button
     xpath_download_button = '//button[normalize-space()="Download"]'
     # Define Language selection button
-    xpath_selection_button = '//button[@aria-label="Select a language"]'
+    xpath_selection_button = '//button[normalize-space()="Select a language"]'
 
     # Define language entry on dropdown list
     # temp = "lntermdrpw34"
     # xpath_language_entry = '//ul[@class="c-menu"]/li[@id="%s"]'% str(temp)
-    xpath_language_entry = '//p[text()="%s"]/parent::*'% str(language_name)
+    xpath_language_entry = '//p[text()="%s"]/ancestor::*'% str(language_name)
 
     wait = WebDriverWait(driver, 10)
     time.sleep(10)
