@@ -54,21 +54,33 @@ def download_content(site_url, language_name):
     # Define Download button
     xpath_download_button = '//button[text()=" Download"]'
     # Define Language selection button
-    xpath_language_selection = '//button[@aria-label="Select a language"]'
+    xpath_selection_button = '//button[@aria-label="Select a language"]'
 
     wait = WebDriverWait(driver, 10)
     time.sleep(10)
 
     print("Selecting download language: "+language_name)
     try: 
-        download_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_download_button)))
+        selection_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_selection_button)))
     except:
         print ("No language selection")
         return (downloaded)
     try:
-        download_button.click()
+        selection_button.click()
     except Exception as e:
         print ("Failed to select download language because: "+str(e))
+        return (downloaded)
+    
+    print("Pressing Download button: "+language_name)
+    try: 
+        download_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_download_button)))
+    except:
+        print ("No Download button")
+        return (downloaded)
+    try:
+        download_button.click()
+    except Exception as e:
+        print ("Failed to press Download button because: "+str(e))
         return (downloaded)
     
     # Check if download has ended
