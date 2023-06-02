@@ -59,12 +59,11 @@ def download_content(site_url, language_name):
     xpath_download_button = '//button[text()=" Download"]'
     # Define Language selection button
     xpath_selection_button = '//button[@aria-label="Select a language"]'
-    # Define where to select languages
-    xpath_languages_list = '//ul[@class="c-menu"]'
+
     # Define language entry on dropdown list
-    temp = "lntermdrpw34"
-    xpath_language_entry = '//ul[@class="c-menu"]/li[@id="%s"]'% str(temp)
-    # /span[@role="option"]/p[text()="German"]
+    # temp = "lntermdrpw34"
+    # xpath_language_entry = '//ul[@class="c-menu"]/li[@id="%s"]'% str(temp)
+    xpath_language_entry = '//p[text()="German"]/parent::*'
 
     wait = WebDriverWait(driver, 10)
     time.sleep(10)
@@ -98,7 +97,7 @@ def download_content(site_url, language_name):
     try:
         language_entry.click()
     except Exception as e:
-        print ("Failed to press Download button because: "+str(e))
+        print ("Failed to click language entry because: "+str(e))
         return (downloaded)
 
     
