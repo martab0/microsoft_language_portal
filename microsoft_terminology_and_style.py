@@ -15,6 +15,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 # Reject cookies popup
+# Not used here, if needed - change cookie object definitions
 def reject_cookies(driver):
 
     wait = WebDriverWait(driver, 10)
@@ -26,6 +27,7 @@ def reject_cookies(driver):
     print("Onetrust cookies rejected successfully...")
 
 # Check what is the latest downloaded file in path
+# Not used here, makes sense for large downloads
 def latest_download_file(path):
     os.chdir(path)
     files = sorted(os.listdir(os.getcwd()), key=os.path.getmtime)
@@ -33,7 +35,7 @@ def latest_download_file(path):
 
     return newest
 
-# Download zipfiles from Dolby Customer release, by xID and to folder
+# Download files from Microsoft Language Portal, by sub-page and language name
 def download_content(site_url, language_name):
     downloaded=False
 
@@ -116,6 +118,7 @@ def download_content(site_url, language_name):
 
 
     # Check if download has ended
+    # Makes sense for large downloads
 
     # fileends = "crdownload"
     # while "crdownload" == fileends:
@@ -133,7 +136,7 @@ def download_content(site_url, language_name):
 
 if __name__ == "__main__":
 
-    # YOUR LIST OF LANGUAGES AS USED ON https://www.microsoft.com/language/Terminology
+    # LIST OF LANGUAGES AS USED ON https://www.microsoft.com/language/Terminology
     languages = ['Arabic','German','Polish']
     
     terminology = 'https://www.microsoft.com/language/Terminology'
