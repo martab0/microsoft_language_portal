@@ -62,7 +62,9 @@ def download_content(site_url, language_name):
     # Define where to select languages
     xpath_languages_list = '//ul[@class="c-menu"]'
     # Define language entry on dropdown list
-    xpath_language_entry = '//ul[@class="c-menu"]/li[@id="lntermdrpw34"]'
+    temp = "lntermdrpw34"
+    xpath_language_entry = '//ul[@class="c-menu"]/li[@id="%s"]'% str(temp)
+    # /span[@role="option"]/p[text()="German"]
 
     wait = WebDriverWait(driver, 10)
     time.sleep(10)
