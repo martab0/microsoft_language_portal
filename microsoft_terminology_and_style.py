@@ -27,7 +27,6 @@ def reject_cookies(driver):
 
 # Check what is the latest downloaded file in path
 def latest_download_file(path):
-    # path = r'Downloads folder file path'
     os.chdir(path)
     files = sorted(os.listdir(os.getcwd()), key=os.path.getmtime)
     newest = files[-1]
@@ -49,7 +48,7 @@ def download_content(site_url, language_name):
     webdriver_options = webdriver.ChromeOptions()
     prefs = {"download.default_directory": download_folder}
     webdriver_options.add_experimental_option('prefs', prefs)
-    #webdriver_options.add_argument('--headless=new')
+    webdriver_options.add_argument('--headless=new')
     webdriver_options.add_argument('--incognito')
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=webdriver_options)
 
@@ -61,8 +60,6 @@ def download_content(site_url, language_name):
     xpath_selection_button = '//button[@aria-label="Select a language"]'
 
     # Define language entry on dropdown list
-    # temp = "lntermdrpw34"
-    # xpath_language_entry = '//ul[@class="c-menu"]/li[@id="%s"]'% str(temp)
     xpath_language_entry = '//p[text()="%s"]/parent::*'% str(language_name)
 
     wait = WebDriverWait(driver, 10)
@@ -82,7 +79,6 @@ def download_content(site_url, language_name):
     
     print("Scrolling down to language: "+language_name)
 
-    # language_entry = driver.find_element(By.XPATH, xpath_language_entry)
     language_entry = driver.find_element(By.XPATH, xpath_language_entry)
 
     try:
@@ -139,7 +135,7 @@ if __name__ == "__main__":
     
     terminology = 'https://www.microsoft.com/language/Terminology'
     styleguides = 'https://www.microsoft.com/language/StyleGuides'
-    assets = [terminology, styleguides]
+    assets = [terminology]
 
     for asset in assets:
         for language in languages:
