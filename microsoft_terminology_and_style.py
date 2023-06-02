@@ -62,7 +62,7 @@ def download_content(site_url, language_name):
     # Define where to select languages
     xpath_languages_list = '//ul[@class="c-menu"]'
     # Define language entry on dropdown list
-    xpath_language_entry = '//ul[@class="c-menu"]/li[@id="lntermdrpw77"]'
+    xpath_language_entry = '//ul[@class="c-menu"]/li[@id="lntermdrpw34"]'
 
     wait = WebDriverWait(driver, 10)
     time.sleep(10)
@@ -112,7 +112,8 @@ def download_content(site_url, language_name):
         print ("Failed to press Download button because: "+str(e))
         return (downloaded)
     
-    time.sleep(10)
+    print("Downloading...")
+    time.sleep(30)
 
 
     # Check if download has ended
@@ -134,7 +135,7 @@ def download_content(site_url, language_name):
 if __name__ == "__main__":
 
     assets = ['terminology', 'style_guide']
-    languages = ['German', 'Polish']
+    languages = ['German']
     terminology_site = 'https://www.microsoft.com/language/Terminology'
 
     for language in languages:
