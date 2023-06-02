@@ -56,7 +56,7 @@ def download_content(site_url, language_name):
     driver.get(site_url)
 
     # Define Download button
-    xpath_download_button = '//button[text()=" Download"]'
+    xpath_download_button = '//button[normalize-space()="Download"]'
     # Define Language selection button
     xpath_selection_button = '//button[@aria-label="Select a language"]'
 
