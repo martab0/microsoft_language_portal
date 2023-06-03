@@ -36,15 +36,19 @@ def latest_download_file(path):
     return newest
 
 # Download files from Microsoft Language Portal, by sub-page and language name
-def download_content(site_url, language_name):
-    downloaded=False
+def download_content(site_url, languages_list):
 
-    print("----------")
-    print("Handling: "+language_name+" "+site_url)
-    
-    if not os.path.exists(language_name):
-        os.makedirs(language_name)
-    download_folder = os.path.abspath(language_name)
+    # Define Download button
+    xpath_download_button = '//button[normalize-space()="Download"]'
+
+    # Define Language selection button
+    xpath_selection_button = '//button[normalize-space()="Select a language"]'
+
+    download_name = 'microsoft_assets'
+            
+    if not os.path.exists(download_name):
+        os.makedirs(download_name)
+    download_folder = os.path.abspath(download_name)
 
     # Create webdriver in headless mode to download to folder
     webdriver_options = webdriver.ChromeOptions()
@@ -56,82 +60,82 @@ def download_content(site_url, language_name):
 
     driver.get(site_url)
 
-    # Define Download button
-    xpath_download_button = '//button[normalize-space()="Download"]'
+    # Loop download for each language
+    for language_name in languages_list:
 
-    # Define Language selection button
-    xpath_selection_button = '//button[normalize-space()="Select a language"]'
+        downloaded=False
 
-    # Define language entry on dropdown list
-    xpath_language_entry = '//p[text()="%s"]/parent::*'% str(language_name)
+        print("----------")
+        print("Handling: "+language_name+" "+site_url)
 
+        # Add subfolder per language?
 
-    wait = WebDriverWait(driver, 10)
-    time.sleep(10)
+        # Define language entry on dropdown list
+        xpath_language_entry = '//p[text()="%s"]/parent::*'% str(language_name)
 
-    print("Selecting download language: "+language_name)
-    try: 
-        selection_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_selection_button)))
-    except:
-        print ("No language selection")
-        return (downloaded)
-    try:
-        selection_button.click()
-    except Exception as e:
-        print ("Failed to start selecting download language because: "+str(e))
-        return (downloaded)
-    
-    print("Scrolling down to language: "+language_name)
+        wait = WebDriverWait(driver, 10)
+        time.sleep(10)
 
-    language_entry = driver.find_element(By.XPATH, xpath_language_entry)
+        print("Selecting download language: "+language_name)
+        try: 
+            selection_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_selection_button)))
+        except:
+            print ("No language selection")
+            return (downloaded)
+        try:
+            selection_button.click()
+        except Exception as e:
+            print ("Failed to start selecting download language because: "+str(e))
+            return (downloaded)
+        
+        print("Scrolling down to language: "+language_name)
 
-    try:
-        driver.execute_script("arguments[0].scrollIntoView();", language_entry)
-    except:
-        print ("Failed to scroll to language")
-        return (downloaded)
-    
-    time.sleep(10)
-    
-    print("Clicking language entry: "+language_name)
-    try:
-        language_entry.click()
-    except Exception as e:
-        print ("Failed to click language entry because: "+str(e))
-        return (downloaded)
+        language_entry = driver.find_element(By.XPATH, xpath_language_entry)
 
-    
-    print("Pressing Download button: "+language_name)
-    try: 
-        download_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_download_button)))
-    except:
-        print ("No Download button")
-        return (downloaded)
-    try:
-        download_button.click()
-    except Exception as e:
-        print ("Failed to press Download button because: "+str(e))
-        return (downloaded)
-    
-    print("Downloading...")
-    time.sleep(30)
+        try:
+            driver.execute_script("arguments[0].scrollIntoView();", language_entry)
+        except:
+            print ("Failed to scroll to language")
+            return (downloaded)
+        
+        time.sleep(10)
+        
+        print("Clicking language entry: "+language_name)
+        try:
+            language_entry.click()
+        except Exception as e:
+            print ("Failed to click language entry because: "+str(e))
+            return (downloaded)
+        
+        print("Pressing Download button: "+language_name)
+        try: 
+            download_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_download_button)))
+        except:
+            print ("No Download button")
+            return (downloaded)
+        try:
+            download_button.click()
+        except Exception as e:
+            print ("Failed to press Download button because: "+str(e))
+            return (downloaded)
+        
+        print("Downloading...")
+        time.sleep(30)
 
+        # Check if download has ended
+        # Makes sense for large downloads
 
-    # Check if download has ended
-    # Makes sense for large downloads
+        # fileends = "crdownload"
+        # while "crdownload" == fileends:
+        #     time.sleep(10)
+        #     newest_file = latest_download_file(download_folder)
+        #     if "crdownload" in newest_file:
+        #         fileends = "crdownload"
+        #     else:
+        #         fileends = "none"
 
-    # fileends = "crdownload"
-    # while "crdownload" == fileends:
-    #     time.sleep(10)
-    #     newest_file = latest_download_file(download_folder)
-    #     if "crdownload" in newest_file:
-    #         fileends = "crdownload"
-    #     else:
-    #         fileends = "none"
-
-    downloaded=True
-    print("Downloaded from page: "+driver.title)
-    return(downloaded)
+        downloaded=True
+        print("Downloaded from page: "+driver.title)
 
 
 if __name__ == "__main__":
@@ -145,7 +149,6 @@ if __name__ == "__main__":
     assets = [terminology]
 
     for asset in assets:
-        for language in languages:
-            download_content(asset, language)
+        download_content(asset, languages)
 
 
