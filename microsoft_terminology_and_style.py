@@ -42,7 +42,7 @@ def download_content(site_url, languages_list):
     xpath_download_button = '//button[normalize-space()="Download"]'
 
     # Define Language selection button
-    xpath_selection_button = '//button[normalize-space()="Select a language"]'
+    xpath_selection_button = '//button[@aria-label="Select a language"]'
 
     download_name = 'microsoft_assets'
             
