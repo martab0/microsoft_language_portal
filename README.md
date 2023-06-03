@@ -1,7 +1,7 @@
 # microsoft_language_portal
 
-Script to download terminology for selected languages from Microsoft Language Portal
-Downloading style guides tbd
+Script to download terminology for selected languages from Microsoft Language Portal.    
+*Downloading style guides tbd*
 
 1. `python3 microsoft_terminology_and_style.py`
 2. `pip install` whatever python cries for
