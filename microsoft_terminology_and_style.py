@@ -122,6 +122,14 @@ def download_content(site_url, languages_list):
         print("Downloading...")
         time.sleep(30)
 
+        # Rename file per language name
+        newest_file = latest_download_file(download_folder)
+        file_name = os.path.splitext(newest_file)[0]
+        file_ext = os.path.splitext(newest_file)[1]
+        file_rename = file_name+"_"+language_name+file_ext
+        os.rename(newest_file, file_rename)
+
+
         # Check if download has ended
         # Makes sense for large downloads
 
