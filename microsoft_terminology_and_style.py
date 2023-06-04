@@ -15,7 +15,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 # Reject cookies popup
-# Not used here, if needed - change cookie object definitions
+# Not used here, but if needed - change cookie object definitions
 def reject_cookies(driver):
 
     wait = WebDriverWait(driver, 10)
@@ -27,7 +27,6 @@ def reject_cookies(driver):
     print("Onetrust cookies rejected successfully...")
 
 # Check what is the latest downloaded file in path
-# Not used here, makes sense for large downloads
 def latest_download_file(path):
     os.chdir(path)
     files = sorted(os.listdir(os.getcwd()), key=os.path.getmtime)
@@ -158,5 +157,3 @@ if __name__ == "__main__":
 
     for asset in assets:
         download_content(asset, languages)
-
-
