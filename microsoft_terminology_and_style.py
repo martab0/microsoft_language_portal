@@ -15,11 +15,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 # Reject cookies popup
-# Not used here, but if needed - change cookie object definitions
 def reject_cookies(driver):
     wait = WebDriverWait(driver, 10)
 
-    # <button type="button" class="_1XuCi2WhiqeWRUVp3pnFG3 erL690_8JwUW-R4bJRcfl" style="overflow-x: visible;">Reject</button>
+    # Define Reject button for Microsoft page cookies
     xpath_reject_button = "//button[text()='Reject']"
     print("Waiting for cookie popup...")
     reject_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_reject_button)))
@@ -53,17 +52,17 @@ def download_content(site_url, languages_list):
     webdriver_options = webdriver.ChromeOptions()
     prefs = {"download.default_directory": download_folder}
     webdriver_options.add_experimental_option('prefs', prefs)
-    # webdriver_options.add_argument('--headless=new')
+    webdriver_options.add_argument('--headless=new')
     webdriver_options.add_argument('--incognito')
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=webdriver_options)
 
     driver.get(site_url)
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
+    
     time.sleep(10)
     reject_cookies(driver)
-    time.sleep(10)
-
+    
     # Loop download for each language
     for language_name in languages_list:
 
@@ -138,8 +137,15 @@ def download_content(site_url, languages_list):
         file_name = os.path.splitext(newest_file)[0]
         file_ext = os.path.splitext(newest_file)[1]
         file_rename = file_name+"_"+language_name+file_ext
-        os.rename(newest_file, file_rename)
 
+        # Force rename if file already existed
+        try:
+            os.rename(newest_file, file_rename)
+        except FileExistsError:
+            print("File already exists, removing existing file: "+file_rename)
+            print("Removing existing file")
+            os.remove(file_rename)
+            os.rename(newest_file, file_rename)
 
         # Check if download has ended
         # Makes sense for large downloads
@@ -165,7 +171,7 @@ if __name__ == "__main__":
     terminology = 'https://www.microsoft.com/language/Terminology'
     styleguides = 'https://www.microsoft.com/language/StyleGuides'
 
-    assets = [styleguides]
+    assets = [terminology, styleguides]
 
     for asset in assets:
         download_content(asset, languages)
