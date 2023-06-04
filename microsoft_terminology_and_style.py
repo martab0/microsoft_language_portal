@@ -17,14 +17,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 # Reject cookies popup
 # Not used here, but if needed - change cookie object definitions
 def reject_cookies(driver):
-
     wait = WebDriverWait(driver, 10)
 
-    xpath_onetrust_policy = "//button[@id='onetrust-reject-all-handler']"
-    print("Waiting for OneTrust cookie popup...")
-    onetrust_reject_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_onetrust_policy)))
-    onetrust_reject_button.click()
-    print("Onetrust cookies rejected successfully...")
+    # <button type="button" class="_1XuCi2WhiqeWRUVp3pnFG3 erL690_8JwUW-R4bJRcfl" style="overflow-x: visible;">Reject</button>
+    xpath_reject_button = "//button[text()='Reject']"
+    print("Waiting for cookie popup...")
+    reject_button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_reject_button)))
+    reject_button.click()
+    print("Cookies rejected successfully...")
 
 # Check what is the latest downloaded file in path
 def latest_download_file(path):
@@ -53,14 +53,16 @@ def download_content(site_url, languages_list):
     webdriver_options = webdriver.ChromeOptions()
     prefs = {"download.default_directory": download_folder}
     webdriver_options.add_experimental_option('prefs', prefs)
-    webdriver_options.add_argument('--headless=new')
+    # webdriver_options.add_argument('--headless=new')
     webdriver_options.add_argument('--incognito')
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=webdriver_options)
 
     driver.get(site_url)
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
-    time.sleep(60)
+    time.sleep(10)
+    reject_cookies(driver)
+    time.sleep(10)
 
     # Loop download for each language
     for language_name in languages_list:
@@ -163,7 +165,7 @@ if __name__ == "__main__":
     terminology = 'https://www.microsoft.com/language/Terminology'
     styleguides = 'https://www.microsoft.com/language/StyleGuides'
 
-    assets = [terminology]
+    assets = [styleguides]
 
     for asset in assets:
         download_content(asset, languages)
