@@ -58,6 +58,9 @@ def download_content(site_url, languages_list):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=webdriver_options)
 
     driver.get(site_url)
+    driver.maximize_window()
+    wait = WebDriverWait(driver, 10)
+    time.sleep(60)
 
     # Loop download for each language
     for language_name in languages_list:
@@ -70,9 +73,8 @@ def download_content(site_url, languages_list):
         # Add subfolder per language?
 
         # Define language entry on dropdown list
-        xpath_language_entry = '//p[text()="%s"]/parent::*'% str(language_name)
+        xpath_language_entry = '//p[text()="%s"]/ancestor::li'% str(language_name)
 
-        wait = WebDriverWait(driver, 10)
         time.sleep(10)
 
         print("Selecting download language: "+language_name)
@@ -81,6 +83,14 @@ def download_content(site_url, languages_list):
         except:
             print ("No language selection")
             return (downloaded)
+        
+        print("Giving focus to selection button")
+        try:
+            driver.execute_script("arguments[0].focus();", selection_button)
+        except:
+            print ("No focus to selection button")
+            return (downloaded)
+
         try:
             selection_button.click()
         except Exception as e:
