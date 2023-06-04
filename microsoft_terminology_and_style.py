@@ -174,4 +174,6 @@ if __name__ == "__main__":
     assets = [terminology, styleguides]
 
     for asset in assets:
+        started_in = os.getcwd()
         download_content(asset, languages)
+        os.chdir(started_in)
