@@ -1,6 +1,7 @@
 # microsoft_language_portal
 
-Script to download terminology and style guides for selected languages from [Microsoft Language Portal](https://www.microsoft.com/en-us/language). 
+Script to download terminology and style guides for selected languages from [Microsoft Language Portal](https://www.microsoft.com/en-us/language)
+
 *Marta Bartnicka*
 
 
