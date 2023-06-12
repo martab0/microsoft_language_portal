@@ -10,9 +10,11 @@ After the change, [the UI strings] will only be available with a Visual Studio s
 
 
 1. `pip install -r requirements.txt`
-2. Update list of languages - use the names that [Microsoft](https://www.microsoft.com/en-us/language/) uses, for example: 
+2. Update list of languages - use the names that Microsoft uses, and they can differ for [terminology](https://www.microsoft.com/language/Terminology) and for [style guides](https://www.microsoft.com/language/StyleGuides), for example: 
 ```
-    languages = ['Arabic','German','Polish']
+    terminology_languages = ['Arabic', 'Chinese Simp.', 'Chinese Trad. (HK, SAR)', 'Chinese Trad. (Taiwan)', 'French', 'French (Canada)', 'German', 'Italian', 'Japanese', 'Korean', 'Norwegian (Bokmål)', 'Norwegian (Nynorsk)', 'Polish', 'Portuguese (Brazil)', 'Portuguese (Portugal)', 'Russian', 'Spanish', 'Spanish (Mexico)', 'Ukrainian']
+    
+    styleguides_languages = ['Arabic', 'Chinese (Simplified)', 'Chinese (Traditional)', 'French (Canada)', 'French (France)', 'German', 'Italian', 'Japanese', 'Korean', 'Norwegian Bokmål', 'Norwegian Nynorsk', 'Polish', 'Russian', 'Portuguese (Brazil)', 'Portuguese (Portugal)', 'Spanish (Neutral)', 'Spanish (Mexico)', 'Spanish (Spain)', 'Spanish (US)', 'Ukrainian']
 ```
 3. `python microsoft_terminology_and_style.py`
 4. Find tbx glossaries and pdf style guides downloaded to subfolder and renamed per language
