@@ -1,3 +1,4 @@
+# Download Microsoft terminology and style guides
 
 import os
 import time
@@ -74,9 +75,9 @@ def download_content(site_url, languages_list):
         # Add subfolder per language?
 
         # Define language entry on dropdown list
-        xpath_language_entry = '//p[text()="%s"]/ancestor::li'% str(language_name)
+        xpath_language_entry = '//p[contains (text(), "%s")]/ancestor::li'% str(language_name)
 
-        time.sleep(10)
+        time.sleep(20)
 
         print("Selecting download language: "+language_name)
         try: 
@@ -165,15 +166,21 @@ def download_content(site_url, languages_list):
 
 if __name__ == "__main__":
 
+    # Selection of languages and language variations
+
+    terminology_url = 'https://www.microsoft.com/language/Terminology'
     # LIST OF LANGUAGES AS USED ON https://www.microsoft.com/language/Terminology
-    languages = ['Arabic','German','Polish']
+    terminology_languages = ['Arabic', 'Chinese Simp.', 'Chinese Trad. (HK, SAR)', 'Chinese Trad. (Taiwan)', 'French', 'French (Canada)', 'German', 'Italian', 'Japanese', 'Korean', 'Norwegian (Bokmål)', 'Norwegian (Nynorsk)', 'Polish', 'Portuguese (Brazil)', 'Portuguese (Portugal)', 'Russian', 'Spanish', 'Spanish (Mexico)', 'Ukrainian']
     
-    terminology = 'https://www.microsoft.com/language/Terminology'
-    styleguides = 'https://www.microsoft.com/language/StyleGuides'
+    styleguides_url = 'https://www.microsoft.com/language/StyleGuides'
+    # LIST OF LANGUAGES AS USED ON https://www.microsoft.com/language/StyleGuides
+    styleguides_languages = ['Arabic', 'Chinese (Simplified)', 'Chinese (Traditional)', 'French (Canada)', 'French (France)', 'German', 'Italian', 'Japanese', 'Korean', 'Norwegian Bokmål', 'Norwegian Nynorsk', 'Polish', 'Russian', 'Portuguese (Brazil)', 'Portuguese (Portugal)', 'Spanish (Neutral)', 'Spanish (Mexico)', 'Spanish (Spain)', 'Spanish (US)', 'Ukrainian']
 
-    assets = [terminology, styleguides]
 
-    for asset in assets:
-        started_in = os.getcwd()
-        download_content(asset, languages)
-        os.chdir(started_in)
+    started_in = os.getcwd()
+    download_content(terminology_url, terminology_languages)
+    os.chdir(started_in)
+
+    started_in = os.getcwd()
+    download_content(styleguides_url, styleguides_languages)
+    os.chdir(started_in)
